@@ -14,12 +14,13 @@
     },
     "require": {
         "php": "^7.4",
-        "php-ds/php-ds": "^1.2",
-        "myclabs/php-enum": "^1.7"
+        "php-ds/php-ds": "^1.2"
     },
     "autoload": {
         "psr-4": {
-            "Jorpo\\Enum\\": ["src"]
+            "Jorpo\\Enum\\": [
+                "src"
+            ]
         }
     },
     "require-dev": {
@@ -28,7 +29,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jorpo\\Enum\\": ["tests"]
+            "Jorpo\\Enum\\": [
+                "tests"
+            ]
         }
     }
 }
