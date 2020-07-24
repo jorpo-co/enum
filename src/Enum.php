@@ -2,11 +2,12 @@
 
 namespace Jorpo\Enum;
 
+use BadMethodCallException;
 use Ds\Hashable;
 use ReflectionClass;
 use function array_key_exists;
 use function array_keys;
-use function array_search;
+use function array_searchFor;
 use function get_called_class;
 use function get_class;
 use function in_array;
@@ -16,6 +17,21 @@ abstract class Enum implements Hashable
 {
     protected static $cache;
     protected $value;
+
+    public static function __callStatic($name, $arguments)
+    {
+        $array = static::toArray();
+
+        if (isset($array[$name]) || \array_key_exists($name, $array)) {
+            return new static($array[$name]);
+        }
+
+        throw new BadMethodCallException(sprintf(
+            "No static method or enum constant '%s' in class %s",
+            $name,
+            static::class
+        ));
+    }
 
     /**
      * @throws InvalidEnumValue
@@ -60,7 +76,7 @@ abstract class Enum implements Hashable
 
     final public function key(): string
     {
-        return static::search($this->value);
+        return static::searchFor($this->value);
     }
 
     final public static function values(): array
@@ -92,12 +108,12 @@ abstract class Enum implements Hashable
         return in_array($value, static::toArray(), true);
     }
 
-    final public static function search($value)
+    public static function searchFor($value)
     {
         return array_search($value, static::toArray(), true);
     }
 
-    final public static function toArray(): array
+    private static function toArray(): array
     {
         $class = get_called_class();
 
