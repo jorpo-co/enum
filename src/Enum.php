@@ -7,7 +7,7 @@ use Ds\Hashable;
 use ReflectionClass;
 use function array_key_exists;
 use function array_keys;
-use function array_searchFor;
+use function array_search;
 use function get_called_class;
 use function get_class;
 use function in_array;
@@ -67,7 +67,6 @@ abstract class Enum implements Hashable
     {
         return (string) $this->value;
     }
-
 
     final public static function keys(): array
     {
